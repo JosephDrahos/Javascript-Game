@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+            <title>Project 1</title>
+            <link href = "proj1.css" rel = "stylesheet" type = "text/css">
+
+            
+
+            <script type="text/javascript" src="../Common/webgl-utils.js"></script>
+            <script type="text/javascript" src="../Common/initShaders.js"></script>
+            <script type="text/javascript" src="../Common/MV.js"></script>
+            <script type="text/javascript" src="proj1.js"></script>
+            
+            <script type="x-shader/x-vertex" id="vertex-shader-square">
+                attribute vec4 myPosition;
+                uniform float theta;
+                uniform vec2 mouseCoordinates;
+                uniform mat3 M;
+
+                void main() {
+                    float xi = myPosition.x;
+                    float yi = myPosition.y;
+
+                    vec3 vi = vec3( xi, yi, 1 );
+                    vec3 vf;
+
+                    vf = M * vi;
+
+                    gl_PointSize = 1.0;
+                    gl_Position.x = vf[0];
+                    gl_Position.y = vf[1];
+                    gl_Position.z = 0.0;
+                    gl_Position.w = 1.0;
+                }
+            </script>
+
+            <script type="x-shader/x-vertex" id="vertex-shader-player">
+                attribute vec4 myPosition;
+                uniform float theta;
+                uniform vec2 mouseCoordinates;
+                uniform mat3 M;
+
+                void main() {
+                    float xi = myPosition.x;
+                    float yi = myPosition.y;
+
+                    vec3 vi = vec3( xi, yi, 1 );
+                    vec3 vf;
+
+                    vf = M * vi;
+
+                    gl_PointSize = 1.0;
+                    gl_Position.x = vf[0];
+                    gl_Position.y = vf[1];
+                    gl_Position.z = 0.0;
+                    gl_Position.w = 1.0;
+                }
+            </script>
+
+            <script type="x-shader/x-vertex" id="vertex-shader-enemy">
+                attribute vec4 myPosition;
+                uniform float theta;
+                uniform mat3 M;
+
+                void main() {
+                    float xi = myPosition.x;
+                    float yi = myPosition.y;
+
+                    vec3 vi = vec3( xi, yi, 1 );
+                    vec3 vf;
+
+                    vf = M * vi;
+
+                    gl_PointSize = 1.0;
+                    gl_Position.x = vf[0];
+                    gl_Position.y = vf[1];
+                    gl_Position.z = 0.0;
+                    gl_Position.w = 1.0;
+                }
+            </script>
+            
+            <script type="x-shader/x-fragment" id="fragment-shader-weapon">
+                void main() {
+                    gl_FragColor = vec4( 0.8, 0.68, .22, 1.0 );
+                }
+            </script>
+            <script type="x-shader/x-fragment" id="fragment-shader-player">
+
+                //precision mediump float;
+                //varying vec4 interpColor;
+
+                void main(){
+                    //gl_FragColor = interpColor;
+                    gl_FragColor = vec4( 0.0, 0.2, 0.5, 1.0 );
+                }
+            </script>
+            <script type="x-shader/x-fragment" id="fragment-shader-enemy">
+                void main() {
+                    gl_FragColor = vec4( 0.8, 0.2, 0.2, 1.0 );
+                }
+            </script>
+    </head>
+    
+    <body onload="init()" onkeydown="moveSquareKeys( event )" onkeyup="keyUp( event )">
+        
+        <h1 style="text-align:center;"> Project 1 </h1>
+        <p>Best Time: <span id="bestTime">0.0</span> s</p>
+        <p>Current Run Time: <span id="elapsedTime">0.0</span> s</p>
+        <p>Lives: <span id="playerLives">5</span></p>
+        <button id="Restart Button" onmouseup="restartGame()"> Restart Game </button>
+        <canvas width="512" height="512" id="gl-canvas" onclick="moveSquare(event)">
+        </canvas>
+        <audio controls style="margin: 0 auto; display: block;" >
+        <source  src="song.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+        </audio>
+
+    </body>
+</html>
+
